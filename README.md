@@ -1,0 +1,2 @@
+# SCPythonStudy
+Python笔记
