@@ -15,7 +15,7 @@ b = [44,55,66]
 c = [a,b] # a和b的地址与上面的a,b相同
 d = c # 浅拷贝，d和c的地址相同，且d中的a，b的地址也与c中的a，b相同
 e = copy.deepcopy(c) # 深拷贝，e和c的地址不同，并且e中的a，b的地址也与c中的a，b不同
-f = copy.copy(c) # f和c地址不同，但f中的a，b的地址也与c中的a，b不同
+f = copy.copy(c) # f和c地址不同，但f中的a，b的地址与c中的a，b相同
 
 
 # copy拷贝元组时的特点
