@@ -34,6 +34,6 @@ print(id(b), b.name, a.name) # 这里a.name也会打印"wangcai"，原因是cls�
 
 
 # 打印结果：
-(4456063760, 'dongsi')
-(4456063760, 'wangcai', 'wangcai')
+#(4456063760, 'dongsi')
+#(4456063760, 'wangcai', 'wangcai')
 
