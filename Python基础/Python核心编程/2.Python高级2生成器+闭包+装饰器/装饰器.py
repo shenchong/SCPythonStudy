@@ -182,3 +182,115 @@ sleep(2)
 foo(2,4,9)
 
 
+例4:装饰器中的return
+from time import ctime, sleep
+
+def timefun(func):
+    def wrappedfunc():
+        print("%s called at %s"%(func.__name__, ctime()))
+        func()
+    return wrappedfunc
+
+@timefun
+def foo():
+    print("I am foo")
+
+@timefun
+def getInfo():
+    return '----hahah---'
+
+foo()
+sleep(2)
+foo()
+
+
+print(getInfo())
+
+执行结果:
+
+foo called at Fri Nov  4 21:55:35 2016
+I am foo
+foo called at Fri Nov  4 21:55:37 2016
+I am foo
+getInfo called at Fri Nov  4 21:55:37 2016
+None
+
+如果修改装饰器为return func()，则运行结果：
+
+foo called at Fri Nov  4 21:55:57 2016
+I am foo
+foo called at Fri Nov  4 21:55:59 2016
+I am foo
+getInfo called at Fri Nov  4 21:55:59 2016
+----hahah---
+
+再如：
+def func(functionName):
+    print("---func---1---")
+    def func_in():
+        print("---func_in---1---")
+        ret = functionName() #保存 返回来的haha
+        print("---func_in---2---")
+        return ret #把haha返回岛17行处的调用
+
+    print("---func---2---")
+    return func_in
+
+@func
+def test():
+    print("----test----")
+    return "haha"
+
+ret = test()
+print("test return value is %s"%ret)
+
+总结：
+    一般情况下为了让装饰器更通用，可以有return
+
+
+————————————————————————————————
+通用装饰器
+def func(functionName):
+    def func_in(*args, **kwargs):
+        print("-----记录日志-----")
+        ret = functionName(*args, **kwargs)
+        return ret
+
+    return func_in
+
+@func
+def test():
+    print("----test----")
+    return "haha"
+————————————————————————————————
+带参数的装饰器
+def func_arg(arg):
+    def func(functionName):
+        def func_in():
+            print("---记录日志-arg=%s--"%arg)
+            if arg=="heihei":
+                functionName()
+                functionName()
+            else:
+                functionName()
+        return func_in
+    return func
+
+#1. 先执行func_arg("heihei")函数,这个函数return 的结果是func这个函数的引用
+#2. @func
+#3. 使用@func对test进行装饰
+@func_arg("heihei")
+def test():
+    print("--test--")
+
+#带有参数的装饰器,能够起到在运行时,有不同的功能
+@func_arg("haha")
+def test2():
+    print("--test2--")
+
+test()
+test2()
+
+
+
+
